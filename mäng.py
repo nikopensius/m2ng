@@ -179,14 +179,6 @@ def lukk():
         nähtavad_lukud = [1]
         a = randint(1, 10)
 
-def dice10():
-    tulemus = randint(0, 10)/10
-    return tulemus
-
-def dice6():
-    tulemus = randint(1, 6)
-    return tulemus     
-        
 def koletis():
     global playerHP
     global playerSTR
