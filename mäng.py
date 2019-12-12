@@ -251,7 +251,7 @@ def sfinks():
     else:
         print("Sinu ees kõrgub müütiline Sfinks, halastamatu mõistatuseküsija. Ta avab oma suu ja sealt kostub:")
         s = randint(1,10)
-    a = randint(0, 1)
+    a = randint(0, 3)
     vastus = input(krüpteeri(("Mõista, mõista, mis see on! " + mõistatused[vastused[a]] + " "), s)).lower()
     if 'ahku' in vastus:
         return
@@ -269,6 +269,87 @@ def krüpteeri(tekst, võti):
         väljund += chr(ord(sümbol) + võti)
     return väljund
 
+def koopapilt():
+    print("""
+#################################
+#\_____________________________/#
+# |            \__/           | #
+# |                           | #
+# |  <1>       <2>       <3>  | #
+# | ,___,     ,___,     ,___, | #
+# | |   |     |   |     |   | | #
+# | |   |     |   |     |   | | #
+# |_|   |_____|   |_____|   |_| #
+# /                           \ #
+#/                             \#
+#################################
+""")
+
+def laekapilt():
+    print("""
+#################################
+#    _______________________    #
+#   /_____ _____ _____ _____\   #
+#  /_| _ |_| _ |_| _ |_| _ |_\  #
+# |  |___| |___| |___| |___|  | #
+# |____V_____V_____V_____V____| #
+# |                           | #
+# |___________________________| #
+# |                           | #
+# |___________________________| #
+#                               #
+#################################
+""")
+
+def mõõgapilt():
+    print("""
+#################################
+#  ___________________________  #
+# || |\         _____________ | #
+# || \ \       /            / | #
+# ||  \ \     /    _       /  | #
+# ||   \ \   /    (_)     /   | #
+# ||    \_\ /            /    | #
+# ||    <   >           /     | #
+# ||      \_\__________/      | #
+# ||__________________________| #
+#                               #
+#################################
+""")
+    
+def kollipilt():
+    print("""
+#################################
+#           _.------.           #
+#          /         \_         #
+#         |  O    O   |         #
+#         |  .vvvvv.  |         #
+#         /  |     |  |\        # 
+#        /   `^^^^^'  | \       #
+#      ./  /|         |\ \_     #
+#     /   / |         \ /  \    #
+#     \  /  |          |\   )   #
+#      `'   |     Y    | ´''    #
+#################################       
+""")
+    
+def sfinksipilt():
+    #credits sfinksipildi eest: https://ascii.co.uk/art/sphinx
+    print("""
+#################################
+#        /_.    _-_           _:#
+#       /:_ _ /'. .'\ ___    :__#
+#      /__:_ /(|`/ !)\  /:__:__:#
+#     /____ |  \ = /  |/ / /\:__#
+#          `  ---  ./ / / /\    #
+#           /--- -----\/ / / /  #
+#          /---  ----- `/ / /   #
+#        _/--- __ _/  ' `/ /    #
+#      /     /XXX/     ! `/     #
+#     |_|_|_|XXX|_|_|_'|_/      #
+#################################
+""")
+
 esimene = 0
 teine = 0
 kolmas = 0
@@ -276,7 +357,11 @@ while playerHP >= 0:
     if playerHP == 0:
         quit()
     if esimene == 0 and teine == 0 and kolmas == 0:
-        valik = input("Sa popsatad eksistentsi toas, mille põrand on tolm ja seinadeks kivine müür.\nTuba valgustab laest langev õlilamp.\nSinu ees, paremal ja vasemal käel mustendavad portaalid.\nVasema kohal on kirjas '1', paremal '2' ja eesmisel '3'.\n'Mis siin ikka', mõtled sa ning astud läbi portaali number: ")
+        koopapilt()
+        time.sleep(1)
+        print("Sa popsatad eksistentsi toas, mille põrand on tolm ja seinadeks kivine müür.")
+        time.sleep(1)
+        valik = input("Sinu ees seisab kolm ust. Trüki number, mitmendasse astuda soovid: ")
     
     if valik == '1':
         print("Su ees seisab laegas, millel on neli lukku.")
