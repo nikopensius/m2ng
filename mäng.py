@@ -162,17 +162,19 @@ def lukk():
             kontroll(vastus, a)
             
         elif tehted[randint(0,5)] == '%':
-            vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " / " + str(b) + " jääk = ?\nSina vastad: "))
+            try:
+                vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " / " + str(b) + " jääk = ?\nSina vastad: "))
+            except:
+                return
             a %= b
-            if 'ahku' in vastus:
-                break
             kontroll(vastus, a)
             
     if laegas == ["tolm"]:
         print("Laegas avaneb, aga see on seest tühi.")
         nähtavad_lukud = [1]
-        a = randint(15, 10)
-    else:    
+
+    else:
+        mõõgapilt()
         print("Laegas avaneb ning selle põhjas seisavad " + laegas[0] + " ja " + laegas[1] + ". Sa võtad need ja pistad kotti.")
         reisipaun.append(laegas.pop(0))
         reisipaun.append(laegas.pop(0))
@@ -188,6 +190,7 @@ def koletis():
     STR = int(vaenlased[vaenlane]["STR"])
     DEF = int(vaenlased[vaenlane]["DEF"])
     
+    kollipilt()
     print("Sind ründab " + str(vaenlane))
     if reisipaun == []:
         print("Astud koletisele vastu paljaste kätega.\nVäljavaated pole just suurepärased.")
@@ -237,7 +240,7 @@ def koletis():
                 print("Purustasid koletise kolju ja hukutasid ta igaveseks Tartarosse.")
                 reisipaun.append("merikarp")
                 print("Leiad koletise kõrva kiilunud merikarbi. Pistad igaks juhuks reisipauna\n")
-                quit()
+                break
                 
         elif "õgene" in tegevus:
             break
@@ -245,11 +248,21 @@ def koletis():
 def sfinks():
     mõistatused = {'kapsas' : 'Lipp lipi peal, lapp lapi peal, ilma nõela pistma.', 'sibul' :  'Seest siiru-viiruline, pealt kulla-karvaline.', 'kurk' : 'Tare täis rahvast, ei ole ust ega akent ees?', 'humal' : 'Keerleb ja veerleb, kui otsa saab, siis muneb?'}
     vastused = list(mõistatused.keys())
+    
+    sfinksipilt()
+    time.sleep(1)
+    
     if 'merikarp' in reisipaun:
         s = 0
-        print("Sfinks avab enda suu ning merikarp su paunas kumiseb.\nSa tõstad merikarbi oma kõrva äärde ning sealt kostub:")
+        print("Sinu ees kõrgub müütiline Sfinks, halastamatu mõistatuseküsija.")
+        time.sleep(1)
+        print("Sfinks avab enda suu ning merikarp su paunas kumiseb.")
+        time.sleep(1)
+        print("Sa tõstad merikarbi oma kõrva äärde ning sealt kostub:")
     else:
-        print("Sinu ees kõrgub müütiline Sfinks, halastamatu mõistatuseküsija. Ta avab oma suu ja sealt kostub:")
+        print("Sinu ees kõrgub müütiline Sfinks, halastamatu mõistatuseküsija.")
+        time.sleep(1)
+        print("Ta avab oma suu ja sealt kostub:")
         s = randint(1,10)
     a = randint(0, 3)
     vastus = input(krüpteeri(("Mõista, mõista, mis see on! " + mõistatused[vastused[a]] + " "), s)).lower()
@@ -364,6 +377,8 @@ while playerHP >= 0:
         valik = input("Sinu ees seisab kolm ust. Trüki number, mitmendasse astuda soovid: ")
     
     if valik == '1':
+        laekapilt()
+        time.sleep(1)
         print("Su ees seisab laegas, millel on neli lukku.")
         time.sleep(1)
         print("Lukkude kohal on hõbedased plaadid, millel viirastuvad tabamatud numbrikombinatsioonid.")
