@@ -1,7 +1,9 @@
 from random import *
 import time
 from math import *
+from tkinter import *
 fail = "sätted.txt" # Failis on mängija ja vaenlaste statsid
+
 
 # randint eri funktsioonide tarvis
 
@@ -190,8 +192,16 @@ def koletis():
     STR = int(vaenlased[vaenlane]["STR"])
     DEF = int(vaenlased[vaenlane]["DEF"])
     
-    kollipilt()
+    if vaenlane == "Paharet":
+        paharet()
+    elif vaenlane == "Madu":
+        madu()
+    elif vaenlane == "Suur rott":
+        rott()
+    else:
+        kollipilt()
     print("Sind ründab " + str(vaenlane))
+    
     if reisipaun == []:
         print("Astud koletisele vastu paljaste kätega.\nVäljavaated pole just suurepärased.")
     else:
@@ -389,6 +399,55 @@ __||||_|||||____| |_|_____________\__________
 _   ___|||||__  _ \\--//    .          _
      _ `---'    .)=\oo|=(.   _   .   .    .
 _  ^      .  -    . \.|
+""")
+    
+def paharet():
+    print("""
+#########################
+#       ,      ,        #
+#      /(.-""-.)\       #
+#  |\  \/      \/  /|   #
+#  | \ / =.  .= \ / |   #
+#  \( \   o\/o   / )/   #
+#   \_, '-/  \-' ,_/    #
+#     /   \__/   \      #
+#     \ \__/\__/ /      #
+#    ___\ \|--|/ /___   #
+#  /`    \      /    `\ #
+# /       '----'       \#
+#########################
+      """)
+    
+def madu():
+    print("""
+################################# 
+#                      __       #
+#        ---_ ...... _/_ -      #
+#       /  .      ./ .'*\ \     #
+#       : '         /__-'   \.  #
+#      /                      ) #
+#    _/                  >   .' #
+#  /   .   .       _.-" /  .'   #
+#  \           __/"     /.'/|   #
+#    \ '--  .-" /     //' |\|   #
+#     \|  \ | /     //_ _ |/|   #
+#      `.  \:     //|_ _ _|\|   #
+#      | \/.    //  | _ _ |/|   #
+#       \_ | \/ /    \ _ _ \\\  #
+#           \__/      \ _ _ \|\ #
+#################################
+""")
+    
+def rott():
+    print("""
+#############################
+#    (\,/)                  #
+#    oo   '''//,        _   #
+#  ,/_;~,        \,    / '  #
+#  "'   \    (    \    !    #
+#        ',|  \    |__.'    #
+#        '~  '~----''       #
+#############################                      
 """)
 
 esimene = 0
