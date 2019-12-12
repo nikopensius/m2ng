@@ -1,26 +1,79 @@
 from random import *
 import time
 from math import *
+fail = "sätted.txt" # Failis on mängija ja vaenlaste statsid
 
-# mängija statsid
-playerHP = 20
-playerSTR = 10
+# randint eri funktsioonide tarvis
 
-# mängija mant
-reisipaun = []
-varustus = {'mõõk' : 0, 'kilp' : 0, 'tervendav mõgin' : 6}
-käed = {'paremas käes': 5, 'vasakus käes': 5}
-
-# muu mant
-
-mõõk = 5
-kilp = 3
-tolm = 0
-laegas = [mõõk, kilp, tolm]
+a = randint(1, 10)
 
 # list luku-funktsiooni jaoks
 
 nähtavad_lukud = [1]
+
+i = -1
+tempint = 0
+tempstr = ""
+templs = []
+m2ngija = {} 
+vaenlased = {}
+varustus = {}
+
+
+def sätistamine(fail):
+    f = open(fail)
+    global i
+
+    for rida in f:
+        
+        #Otsib üles tabeli pealkirja, et teada missuguste asjadega on tegemist
+        if rida.strip() == "#M2ngija":
+            i = 0
+            continue
+        if rida.strip() == "#Vaenlased":
+            i = 1
+            continue
+        if rida.strip() == "#Varustus":
+            i = 2
+            continue
+        
+    #Võtab kõik atribuutid m2ngija tabeli all ja lisab need m2ngija sõnastikku
+        if i == 0 and rida.strip() != "":
+            templs = rida.strip().split(" = ")
+            m2ngija[templs[0]] = int(templs[1].strip())
+            
+    #Võtab kõik vaenlased vaenlaste tabeli alt ja lisab need vaenlaste sõnastikku   
+        if i == 1 and rida[0] == "-":
+            vaenlased[rida.strip("-\n")] = {}
+            tempstr = rida.strip("-\n")
+    #Võtab vaenlaste atribuutid ja lisab need vaenlaste sõnastiku väärtusteks
+        if i == 1 and rida[0] != "-" and rida.strip() != "":
+            templs = rida.strip().split(" = ")
+            vaenlased[tempstr][templs[0]] = int(templs[1])
+            
+    #Võtab kõik varustuse varustuse tabeli alt ja lisab need varustuse sõnastikku
+        if i == 2 and rida[0] == "-":
+            varustus[rida.strip("-\n")] = {}
+            tempstr = rida.strip("-\n")
+    #Võtab varustuse atribuutid ja lisab need varustuse sõnastiku väärtusteks
+        if i == 2 and rida[0] != "-" and rida.strip() != "":
+            templs = rida.strip().split(" = ")
+            varustus[tempstr][templs[0]] = int(templs[1])
+        
+
+sätistamine(fail)
+
+# muu mant
+laegas = [choice(list(varustus.keys())), choice(list(varustus.keys())), "tolm"]
+
+# mängija mant
+reisipaun = [choice(list(varustus.keys()))]
+käed = {'paremas käes': 0, 'vasakus käes': 0}
+
+# mängija statsid
+playerHP = int(m2ngija["HP"])
+playerSTR = int(m2ngija["STR"])
+playerDEF = int(m2ngija["DEF"])
 
 # gaas, mis vallandub, kui eksid luku-ülesandes
 
@@ -63,6 +116,7 @@ def lukk():
         
         if playerHP == 0:                        # juhuks, kui gaas() mängija elupunktid nullitab
             break
+            
         if tehted[randint(0, 5)] == '+':
             try:
                 vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " + " + str(b) + " = ?\nSina vastad: ")) 
@@ -108,76 +162,82 @@ def lukk():
             kontroll(vastus, a)
             
         elif tehted[randint(0,5)] == '%':
-            try:
-                vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " / " + str(b) + " jääk = ?\nSina vastad: "))
-            except:
-                return
+            vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " / " + str(b) + " jääk = ?\nSina vastad: "))
             a %= b
+            if 'ahku' in vastus:
+                break
             kontroll(vastus, a)
             
-    if laegas == [tolm]:
+    if laegas == ["tolm"]:
         print("Laegas avaneb, aga see on seest tühi.")
         nähtavad_lukud = [1]
         a = randint(15, 10)
     else:    
-        print("Laegas avaneb ning selle põhjas seisavad sätendav mõõk ja vahva kilp. Pistad mõõga tuppe ja kilbi seljale.")
-        varustus['mõõk'] = laegas.pop(0)
-        varustus['kilp'] = laegas.pop(0)
+        print("Laegas avaneb ning selle põhjas seisavad " + laegas[0] + " ja " + laegas[1] + ". Sa võtad need ja pistad kotti.")
+        reisipaun.append(laegas.pop(0))
+        reisipaun.append(laegas.pop(0))
         nähtavad_lukud = [1]
-        a = randint(1, 10)  
-        
+        a = randint(1, 10)
+
 def koletis():
     global playerHP
     global playerSTR
-    HP = 20
+    global playerDEF
+    vaenlane = choice(list(vaenlased.keys()))
+    HP = int(vaenlased[vaenlane]["HP"])
+    STR = int(vaenlased[vaenlane]["STR"])
+    DEF = int(vaenlased[vaenlane]["DEF"])
     
-    varustuse_järjend = []
-    for asi in varustus:
-        if varustus[asi] > 0:
-            varustuse_järjend.append(asi)
-    print("Sind ründab koletis!")
-    if varustuse_järjend == []:
+    print("Sind ründab " + str(vaenlane))
+    if reisipaun == []:
         print("Astud koletisele vastu paljaste kätega.\nVäljavaated pole just suurepärased.")
     else:
-        haare = input("Kobad oma varustuse järgi ja leiad järgnevad esemed: " + str(varustuse_järjend)  + ". Mida soovid enesekaitseks haarata? ")
-        if 'mõõ' in haare:
-            käed['paremas käes'] = varustus['mõõk']
-        if 'kil' in haare:
-            käed['vasakus käes'] = varustus['kilp']
-        if 'mõg' in haare:
-            print("Mõgin sind koletise eest ei kaitse.")
-            
+        haare = input("Kobad oma varustuse järgi ja leiad järgnevad esemed: " + str(reisipaun)  + ". Mida soovid enesekaitseks haarata? ")
+        if str(haare) in reisipaun:
+            if "DMG" in varustus[haare].keys():
+                playerSTR += varustus[haare]["DMG"]
+            if "DEF" in varustus[haare].keys():
+                playerDEF += varustus[haare]["DEF"]
+            if "HP" in varustus[haare].keys():
+                playerHP += varustus[haare]["HP"]
+                
     while True:
         tegevus = input("Mida teha soovid? Kas 'võitled', 'põgened' või 'jood' tervendavat mõginat? ")
         time.sleep(0.5)
         
         if "joo" in tegevus:
-            if varustus['tervendav mõgin'] == 0:
+            if "HPpott" not in reisipaun:
                 print("Oo ei! Mõgin on otsas.")
             else:
-                playerHP += varustus['tervendav mõgin']
-                varustus['tervendav mõgin'] = 0
+                playerHP += varustus[haare]["HP"]
+                reisipaun.remove("HPpott")
                 print("Jood ja sul on nüüd " + str(playerHP) + " elupunkti")
         
         elif "õitle" in tegevus:
-            löök = round(abs(randint(0, 6) - käed['vasakus käes']))
-            playerHP -= löök
-            print("\nKoletis lööb sulle " + str(löök) + " punkti dämmi.\nSul säilib " + str(playerHP) + " elupunkti.")
+            löök = round(abs(randint(0, 6) - playerDEF + STR))
+            if löök <= 0:
+                print("\nKoletis ei suutnud sulle haiget teha.")
+            else:
+                playerHP -= löök
+                print("\nKoletis lööb sulle " + str(löök) + " punkti dämmi.\nSul säilib " + str(playerHP) + " elupunkti.")
             time.sleep(1)
             
             if playerHP <= 0:
                 quit()
               
-            playerLÖÖK = round(randint(0, 4) + käed['paremas käes'])
-            HP -= playerLÖÖK
-            print("\nLööd koletisele " + str(playerLÖÖK) + " punkti dämmi.\nKoletisel säilib " + str(HP) + " elupunkti.")
+            playerLÖÖK = round(randint(0, 4) + playerSTR - DEF)
+            if playerLÖÖK <= 0:
+                print("\nSa ei suutnud koletisele haiget teha.")
+            else:
+                HP -= playerLÖÖK
+                print("\nLööd koletisele " + str(playerLÖÖK) + " punkti dämmi.\nKoletisel säilib " + str(HP) + " elupunkti.")
             time.sleep(1)
             
             if HP <= 0:
                 print("Purustasid koletise kolju ja hukutasid ta igaveseks Tartarosse.")
-                reisipaun.append('merikarp')
+                reisipaun.append("merikarp")
                 print("Leiad koletise kõrva kiilunud merikarbi. Pistad igaks juhuks reisipauna\n")
-                break
+                quit()
                 
         elif "õgene" in tegevus:
             break
@@ -212,22 +272,6 @@ def krüpteeri(tekst, võti):
 esimene = 0
 teine = 0
 kolmas = 0
-
-print("""
-#################################
-#                               #
-#                               #
-#                               #
-#                               #
-#   ,___,     ,___,     ,___,   #
-#   |   |     |   |     |   |   #
-#   |   |     |   |     |   |   #
-#   |   |     |   |     |   |   #
-#                               #
-#                               #
-#################################
-""")
-
 while playerHP >= 0:
     if playerHP == 0:
         quit()

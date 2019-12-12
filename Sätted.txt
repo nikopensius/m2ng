@@ -1,0 +1,47 @@
+#M2ngija
+HP = 100
+STR = 5
+DEF = 0
+
+#Vaenlased
+
+-Paharet-
+HP = 10
+STR = 5
+DEF = 2
+EXP = 2
+
+-Madu-
+HP = 20
+STR = 10
+DEF = 5
+EXP = 6
+
+-Suur rott-
+HP = 25
+STR = 3
+DEF = 0
+EXP = 4
+
+#Varustus
+
+-Pistoda-
+DMG = 2
+
+-Kaigas-
+DMG = 3
+
+-Mõõk-
+DMG = 5
+
+-Sõjakirves-
+DMG = 7
+
+-Puukilp-
+DEF = 1
+
+-Raudkilp-
+DEF = 3
+
+-HPpott-
+HP = 50
