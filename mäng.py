@@ -269,7 +269,14 @@ def sfinks():
     if 'ahku' in vastus:
         return
     elif vastus == vastused[a]:
-        print('Vastad "' + vastus + '" ja Sfinks kummardab tõrksalt, laseb su mööda, kuna vastus on sul õige.\nSfinksist mõõdudes kirgatab su ees Päikse pimestav valgus - oled vaba.')
+        print('Vastad "' + vastus + '" ja Sfinks kummardab tõrksalt.')
+        time.sleep(1)
+        print("Ta laseb su mööda, kuna vastus on sul õige")
+        time.sleep(1)
+        print("Oled vaba!")
+        time.sleep(1)
+        loodus()
+        time.sleep(3)
         quit()
     else:
         print('Vastad "' + vastus + '" ja Sfinks surmab su silmapilk, kuna vastus on sul vale.')
@@ -361,6 +368,27 @@ def sfinksipilt():
 #      /     /XXX/     ! `/     #
 #     |_|_|_|XXX|_|_|_'|_/      #
 #################################
+""")
+    
+def loodus():
+    # https://www.asciiart.eu/nature/deserts
+    print("""
+    .    _    +     .  ______   .          .
+ (      /|\      .    |      \      .   +
+     . |||||     _    | |   | | ||         .
+.      |||||    | |  _| | | | |_||    .
+   /\  ||||| .  | | |   | |      |       .
+__||||_|||||____| |_|_____________\__________
+. |||| |||||  /\   _____      _____  .   .
+  |||| ||||| ||||   .   .  .         ________
+ . \|`-'|||| ||||    __________       .    .
+    \__ |||| ||||      .          .     .
+ __    ||||`-'|||  .       .    __________
+.    . |||| ___/  ___________             .
+   . _ ||||| . _               .   _________
+_   ___|||||__  _ \\--//    .          _
+     _ `---'    .)=\oo|=(.   _   .   .    .
+_  ^      .  -    . \.|
 """)
 
 esimene = 0
