@@ -9,7 +9,7 @@ playerSTR = 10
 # mängija mant
 reisipaun = []
 varustus = {'mõõk' : 0, 'kilp' : 0, 'tervendav mõgin' : 6}
-käed = {'paremas käes': 0, 'vasakus käes': 0}
+käed = {'paremas käes': 5, 'vasakus käes': 5}
 
 # muu mant
 
@@ -17,10 +17,6 @@ mõõk = 5
 kilp = 3
 tolm = 0
 laegas = [mõõk, kilp, tolm]
-
-# randint eri funktsioonide tarvis
-
-a = randint(1, 10)
 
 # list luku-funktsiooni jaoks
 
@@ -67,7 +63,6 @@ def lukk():
         
         if playerHP == 0:                        # juhuks, kui gaas() mängija elupunktid nullitab
             break
-            
         if tehted[randint(0, 5)] == '+':
             try:
                 vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " + " + str(b) + " = ?\nSina vastad: ")) 
@@ -113,10 +108,11 @@ def lukk():
             kontroll(vastus, a)
             
         elif tehted[randint(0,5)] == '%':
-            vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " / " + str(b) + " jääk = ?\nSina vastad: "))
+            try:
+                vastus = float(input("Lukul number " + str(len(nähtavad_lukud)) + " seisab: " + str(a) + " / " + str(b) + " jääk = ?\nSina vastad: "))
+            except:
+                return
             a %= b
-            if 'ahku' in vastus:
-                break
             kontroll(vastus, a)
             
     if laegas == [tolm]:
@@ -128,15 +124,7 @@ def lukk():
         varustus['mõõk'] = laegas.pop(0)
         varustus['kilp'] = laegas.pop(0)
         nähtavad_lukud = [1]
-        a = randint(1, 10)
-
-def dice10():
-    tulemus = randint(0, 10)/10
-    return tulemus
-
-def dice6():
-    tulemus = randint(1, 6)
-    return tulemus     
+        a = randint(1, 10)  
         
 def koletis():
     global playerHP
@@ -189,7 +177,7 @@ def koletis():
                 print("Purustasid koletise kolju ja hukutasid ta igaveseks Tartarosse.")
                 reisipaun.append('merikarp')
                 print("Leiad koletise kõrva kiilunud merikarbi. Pistad igaks juhuks reisipauna\n")
-                quit()
+                break
                 
         elif "õgene" in tegevus:
             break
@@ -224,6 +212,22 @@ def krüpteeri(tekst, võti):
 esimene = 0
 teine = 0
 kolmas = 0
+
+print("""
+#################################
+#                               #
+#                               #
+#                               #
+#                               #
+#   ,___,     ,___,     ,___,   #
+#   |   |     |   |     |   |   #
+#   |   |     |   |     |   |   #
+#   |   |     |   |     |   |   #
+#                               #
+#                               #
+#################################
+""")
+
 while playerHP >= 0:
     if playerHP == 0:
         quit()
